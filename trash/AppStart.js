@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import regeneratorRuntime from "regenerator-runtime";
 import {hot} from "react-hot-loader";
-import "./App.less";
+import "../src/App.less";
 
 const axios = require('axios');
 
@@ -18,7 +18,6 @@ class Card extends Component {
             </div>
         )
     }
-
 }
 
 const CardList = (props) => {
@@ -34,7 +33,6 @@ class Form extends Component {
         userName: ''
     };
     //  userInput = React.createRef();
-
 
     handleSubmit = async (e) => {
         e.preventDefault();

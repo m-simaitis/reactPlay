@@ -30,11 +30,11 @@ const Form = (props) => {
     const [userName, setUserName] = useState('');
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(userName);
         let resp = await axios.get(`https://api.github.com/users/${userName}`).then((resp) => {
             props.onSubmit(resp.data);
             setUserName('');
         }).catch((e) => {
+            //just to fill
             resp = {
                 data: {id: Math.random(100), name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook"}
             };
