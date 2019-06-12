@@ -1,31 +1,63 @@
-/* Nerdy secret: You can use "less" below! Don't tell anybody... */
-
-.github-profile {
-  margin: 1rem;
-  img {
-    width: 75px;
-  }
-  .info {
-    display: inline-block;
-    margin-left: 12px;
-    .name {
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
-  }
+.game {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-form {
-  border: thin solid #ddd;
-  background-color: #fbfbfb;
-  padding: 2rem;
-  margin-bottom: 2rem;
+.body {
   display: flex;
-  justify-content: center;
 }
 
-.header {
+.help {
+  color: #666;
+  margin: 10px;
   text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+}
+
+.left {
+  text-align: center;
+  width: 50%;
+  border: thin solid #ddd;
+}
+
+.right {
+  text-align: center;
+  padding: 10px;
+  width: 50%;
+  border: thin solid #ddd;
+}
+
+.star {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+.star:after {
+  content: "\2605";
+  font-size: 45px;
+}
+
+.number {
+  background-color: #eee;
+  border: thin solid #ddd;
+  width: 45px;
+  height: 45px;
+  margin: 10px;
+  font-size: 25px;
+}
+
+.number:focus, .number:active {
+  outline: none;
+  border: thin solid #ddd;
+}
+
+.timer {
+  color: #666;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.game-done .message {
+  font-size: 250%;
+  font-weight: bold;
+  margin: 15px;
 }

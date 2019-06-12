@@ -3,72 +3,78 @@ import regeneratorRuntime from "regenerator-runtime";
 import {hot} from "react-hot-loader";
 import "./App.less";
 
-const axios = require('axios');
-
-const Card = (props) => {
-    const profile = props;
+const App = () => {
     return (
-        <div className="github-profile ">
-            <img src={profile.avatar_url}/>
-            <div className="info">
-                <div className="name">{profile.name}</div>
-                <div className="company">{profile.company}</div>
+        <div className="game">
+            <div className="help">
+                Pick 1 or more numbers that sum to the number of stars
             </div>
-        </div>
-    )
-};
-
-const CardList = (props) => {
-    return (
-        <div>
-            {props.profiles.map(profile => <Card key={profile.id} {...profile}/>)}
-        </div>
-    )
-};
-
-const Form = (props) => {
-    const [userName, setUserName] = useState('');
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        let resp = await axios.get(`https://api.github.com/users/${userName}`).then((resp) => {
-            props.onSubmit(resp.data);
-            setUserName('');
-        }).catch((e) => {
-            //just to fill
-            resp = {
-                data: {id: Math.random(100), name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook"}
-            };
-            props.onSubmit(resp.data);
-            setUserName('');
-        });
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input
-                value={userName}
-                onChange={event => setUserName(event.target.value)}
-                type="text"
-                placeholder="GitHub username"
-                required
-            />
-            <button>Add card</button>
-        </form>
-    )
-};
-
-const App = (props) => {
-    const [profiles, setProfiles] = useState([]);
-    const addNewProfile = (profileData) => {
-        setProfiles([...profiles, profileData]);
-    };
-    return (
-        <div>
-            <div className="header">{props.title}</div>
-            <Form onSubmit={addNewProfile}/>
-            <CardList profiles={profiles}/>
+            <div className="body">
+                <div className="left">
+                    <div className="star"/>
+                    <div className="star"/>
+                    <div className="star"/>
+                    <div className="star"/>
+                    <div className="star"/>
+                    <div className="star"/>
+                    <div className="star"/>
+                    <div className="star"/>
+                    <div className="star"/>
+                </div>
+                <div className="right">
+                    <button className="number">1</button>
+                    <button className="number">2</button>
+                    <button className="number">3</button>
+                    <button className="number">4</button>
+                    <button className="number">5</button>
+                    <button className="number">6</button>
+                    <button className="number">7</button>
+                    <button className="number">8</button>
+                    <button className="number">9</button>
+                </div>
+            </div>
+            <div className="timer">Time Remaining: 10</div>
         </div>
     );
+};
+
+
+// Color Theme
+const colors = {
+    available: 'lightgray',
+    used: 'lightgreen',
+    wrong: 'lightcoral',
+    candidate: 'deepskyblue',
+};
+
+// Math science
+const utils = {
+    // Sum an array
+    sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
+
+    // create an array of numbers between min and max (edges included)
+    range: (min, max) => Array.from({length: max - min + 1}, (_, i) => min + i),
+
+    // pick a random number between min and max (edges included)
+    random: (min, max) => min + Math.floor(max * Math.random()),
+
+    // Given an array of numbers and a max...
+    // Pick a random sum (< max) from the set of all available sums in arr
+    randomSumIn: (arr, max) => {
+        const sets = [[]];
+        const sums = [];
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = 0, len = sets.length; j < len; j++) {
+                const candidateSet = sets[j].concat(arr[i]);
+                const candidateSum = utils.sum(candidateSet);
+                if (candidateSum <= max) {
+                    sets.push(candidateSet);
+                    sums.push(candidateSum);
+                }
+            }
+        }
+        return sums[utils.random(0, sums.length)];
+    },
 };
 
 export default hot(module)(App);
