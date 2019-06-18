@@ -1,43 +1,8 @@
-import React, {Component, useState, useEffect} from "react";
-import regeneratorRuntime from "regenerator-runtime";
-import {hot} from "react-hot-loader";
-import "./App.less";
-
-const StarsDisplay = props => {
-    return (
-        utils.range(1, props.starCount).map(starId =>
-            <div key={starId} className='star'/>
-        )
-
-    );
-};
-
-const PlayAgain = props => {
-    return (
-        <div className="game-done">
-            <div className="message"
-                 style={{color: props.status === 'lost' ? 'red' : 'green'}}
-            >
-                {props.status === 'lost' ? 'Game Over' : 'You Won Mr.'}
-            </div>
-            <button onClick={props.onClick}>
-                Play Again
-            </button>
-        </div>
-    )
-};
-
-const PlayNumber = props => {
-    return (
-        <button
-            className="number"
-            style={{backgroundColor: colors[props.status]}}
-            onClick={() => props.onClick(props.nr, props.status)}
-        >
-            {props.nr}
-        </button>
-    );
-};
+import React, {useState, useEffect} from "react";
+import utils from '../math-utils';
+import StarsDisplay from './StarsDisplay';
+import PlayAgain from './PlayAgain';
+import PlayNumber from './PlayNumber';
 
 const useGameState = () => {
     const [stars, setStars] = useState(utils.random(1, 9));
@@ -69,7 +34,6 @@ const useGameState = () => {
     };
     return {stars, availableNums, candidateNums, secondsLeft, setGameState}
 };
-
 const Game = props => {
     const {
         stars,
@@ -135,47 +99,4 @@ const Game = props => {
     );
 };
 
-const App = () => {
-    const [gameId, setGameId] = useState(1);
-    return <Game key={gameId} startNewGame={() => setGameId(gameId + 1)}/>
-};
-
-// Color Theme
-const colors = {
-    available: 'lightgray',
-    used: 'lightgreen',
-    wrong: 'lightcoral',
-    candidate: 'deepskyblue',
-};
-
-// Math science
-const utils = {
-    // Sum an array
-    sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
-
-    // create an array of numbers between min and max (edges included)
-    range: (min, max) => Array.from({length: max - min + 1}, (_, i) => min + i),
-
-    // pick a random number between min and max (edges included)
-    random: (min, max) => min + Math.floor(max * Math.random()),
-
-    // Given an array of numbers and a max...
-    // Pick a random sum (< max) from the set of all available sums in arr
-    randomSumIn: (arr, max) => {
-        const sets = [[]];
-        const sums = [];
-        for (let i = 0; i < arr.length; i++) {
-            for (let j = 0, len = sets.length; j < len; j++) {
-                const candidateSet = sets[j].concat(arr[i]);
-                const candidateSum = utils.sum(candidateSet);
-                if (candidateSum <= max) {
-                    sets.push(candidateSet);
-                    sums.push(candidateSum);
-                }
-            }
-        }
-        return sums[utils.random(0, sums.length)];
-    },
-};
-
-export default hot(module)(App);
+export default Game;
