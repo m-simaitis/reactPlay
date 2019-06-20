@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App.js";
+import App from "./components/App.js";
 
 
 ReactDOM.render(
-    <App title="The GitHub Cards App "/>,
+    <App />,
     document.getElementById("root")
 );

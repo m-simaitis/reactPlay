@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import regeneratorRuntime from "regenerator-runtime";
 import {hot} from "react-hot-loader";
-import "../src/App.less";
+import "../src/styles/App.less";
 
 const axios = require('axios');
 
